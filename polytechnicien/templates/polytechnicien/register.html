@@ -1,0 +1,127 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscription - Django Polytec</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <!-- Styles & Frameworks -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        body {
+            background: linear-gradient(to right, #6a11cb, #2575fc); /* Gradient background */
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        .card {
+            animation: fadeIn 0.5s ease-in-out;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            margin-top: 50px;
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, #4e73df, #224abe);
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .input-group-text {
+            border-radius: 0.5rem 0 0 0.5rem;
+            background-color: #f8f9fa;
+            border: 1px solid #ced4da;
+        }
+
+        .hover-effect {
+            transition: transform 0.2s ease, opacity 0.2s ease;
+        }
+
+        .hover-effect:hover {
+            transform: scale(1.05);
+            opacity: 0.9;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .footer {
+            background-color: #f8f9fa;
+            padding: 15px;
+            text-align: center;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <header class="text-white text-center py-5 shadow animate__animated animate__fadeInDown">
+        <h1 class="fw-bold">Inscription</h1>
+        <p class="lead">Créez votre compte pour rejoindre Django Polytec</p>
+    </header>
+
+    <main class="container d-flex justify-content-center align-items-center min-vh-100">
+        <div class="col-lg-5 col-md-7 col-sm-9">
+            <!-- Carte avec ombre et animation -->
+            <div class="card shadow-lg border-0 rounded-4 overflow-hidden position-relative">
+                <!-- En-tête de la carte -->
+                <div class="card-header">
+                    <h3 class="fw-bold mb-0">Bienvenue à Django Polytec</h3>
+                    <p>Complétez votre inscription en remplissant les informations suivantes</p>
+                </div>
+
+                <!-- Corps de la carte -->
+                <div class="card-body p-4">
+                    <!-- Formulaire d'inscription -->
+                    <form method="post" class="needs-validation" novalidate>
+                        {% csrf_token %}
+
+                        <!-- Boucle pour afficher les champs du formulaire -->
+                        {% for field in form %}
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">{{ field.label }}</label>
+                                <div class="input-group">
+                                    {{ field }}
+                                </div>
+                                <!-- Affichage des erreurs de champ -->
+                                {% if field.errors %}
+                                    <div class="text-danger small mt-1">
+                                        {% for error in field.errors %}
+                                            {{ error }}
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+
+                        <!-- Bouton d'inscription -->
+                        <button type="submit" class="btn btn-primary w-100 py-2 fw-bold shadow-sm hover-effect">
+                            <i class="fas fa-user-plus"></i> S'inscrire
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>Vous avez déjà un compte ? <a href="{% url 'login' %}" class="text-primary fw-bold hover-effect">Connectez-vous ici</a></p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+</body>
+</html>
